@@ -1,5 +1,5 @@
 {
-  "version": 2,
-  "buildCommand": "npx react-scripts build",
-  "outputDirectory": "build"
+  "buildCommand": "CI=false react-scripts build",
+  "outputDirectory": "build",
+  "installCommand": "npm install"
 }
