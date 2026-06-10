@@ -49,3 +49,26 @@
   border: 2px solid #fff4; border-top-color: #fff;
   border-radius: 50%; animation: spin .6s linear infinite;
 }
+
+/* ── Coming Soon ── */
+.auth-coming-soon { text-align: center; }
+.acs-icon { font-size: 56px; margin-bottom: 16px; }
+.acs-features {
+  display: flex; flex-direction: column; gap: 10px;
+  margin: 24px 0; text-align: left;
+}
+.acs-feature {
+  background: var(--bg2); border: 1px solid var(--border2);
+  border-radius: 10px; padding: 11px 16px;
+  font-size: 13px; color: var(--muted);
+}
+.acs-btn {
+  display: block; width: 100%;
+  background: linear-gradient(135deg, var(--accent), var(--accent2));
+  color: #fff; text-decoration: none; text-align: center;
+  padding: 14px 28px; border-radius: 12px;
+  font-size: 15px; font-weight: 600;
+  box-shadow: 0 4px 20px #7c6bff44;
+  transition: all .3s; margin-top: 8px;
+}
+.acs-btn:hover { transform: translateY(-2px); box-shadow: 0 8px 30px #7c6bff66; }

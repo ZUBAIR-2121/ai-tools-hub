@@ -46,13 +46,12 @@ body {
   font-family: var(--font-body);
   min-height: 100vh;
   overflow-x: hidden;
-  cursor: none;
+  cursor: auto;
   transition: background .3s, color .3s;
 }
 
-/* Custom cursor */
-#cursor { position:fixed;width:12px;height:12px;background:var(--accent);border-radius:50%;pointer-events:none;z-index:9999;transform:translate(-50%,-50%);transition:width .2s,height .2s; }
-#cursor-ring { position:fixed;width:36px;height:36px;border:1.5px solid #7c6bff55;border-radius:50%;pointer-events:none;z-index:9998;transform:translate(-50%,-50%);transition:left .1s,top .1s,width .3s,height .3s; }
+/* No custom cursor — use system default */
+#cursor, #cursor-ring { display: none !important; }
 
 /* Orbs */
 .orb { position:fixed;border-radius:50%;filter:blur(80px);pointer-events:none;z-index:0; }
@@ -71,9 +70,9 @@ body {
 @keyframes shimmer { 0%{background-position:-400px 0} 100%{background-position:400px 0} }
 
 /* Buttons & inputs */
-button { cursor:none;font-family:var(--font-body); }
-a { cursor:none; }
-input,textarea { cursor:none;font-family:var(--font-body); }
+button { cursor:pointer;font-family:var(--font-body); }
+a { cursor:pointer; }
+input,textarea { cursor:text;font-family:var(--font-body); }
 
 /* Scrollbar */
 ::-webkit-scrollbar { width:6px; }
@@ -133,3 +132,38 @@ input,textarea { cursor:none;font-family:var(--font-body); }
 .pwa-banner-text strong { display:block;color:var(--text);margin-bottom:2px; }
 .pwa-install-btn { background:linear-gradient(135deg,var(--accent),var(--accent2));color:#fff;border:none;padding:9px 18px;border-radius:10px;font-size:13px;font-weight:600;white-space:nowrap; }
 .pwa-close-btn { background:none;border:none;color:var(--dim);font-size:20px;padding:4px; }
+
+/* =============================================
+   FULLY RESPONSIVE — ALL DEVICES
+   Mobile: <480px | Tablet: 481-768px | iPad: 769-1024px
+   ============================================= */
+
+/* Hide custom cursor on touch devices */
+@media (hover: none) and (pointer: coarse) {
+  body { cursor: auto !important; }
+  #cursor, #cursor-ring { display: none !important; }
+  button, a, input, textarea, select { cursor: auto !important; }
+}
+
+/* iPad Pro / Landscape tablets */
+@media (max-width: 1024px) {
+  .form-row { grid-template-columns: 1fr 1fr; gap: 12px; }
+}
+
+/* Tablet */
+@media (max-width: 768px) {
+  body { padding-bottom: 72px; }
+  .form-row { grid-template-columns: 1fr; }
+  .btn-primary { font-size: 14px; padding: 13px 20px; }
+  .form-input { font-size: 14px; padding: 12px 16px; }
+}
+
+/* Mobile */
+@media (max-width: 480px) {
+  .badge { font-size: 9px; padding: 2px 8px; }
+  .btn-primary { font-size: 13px; padding: 12px 16px; }
+  .pwa-banner { bottom: 76px; left: 8px; right: 8px; padding: 12px 14px; gap: 10px; }
+  .pwa-banner-text { font-size: 12px; }
+  .mbn-btn { padding: 4px 8px; font-size: 9px; }
+  .mbn-btn span:first-child { font-size: 18px; }
+}
