@@ -1,5 +1,5 @@
 import React, { useState, useRef, useEffect } from 'react';
-import { allTools, DATA } from '../data/toolsData';
+import { allToolsComplete as allTools, ALL_DATA as DATA } from '../data/toolsData';
 import './AIChatbot.css';
 
 // ── Build a compact tools context for the AI ──────────────────────────────

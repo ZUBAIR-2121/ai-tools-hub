@@ -133,7 +133,7 @@ export default function News() {
         </div>
 
       </div>
-      <Footer toolCount={0}/>
+      <Footer />
     </div>
   );
 }

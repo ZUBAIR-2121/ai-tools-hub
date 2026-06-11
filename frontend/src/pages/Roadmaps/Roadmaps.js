@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import Footer from '../../components/Footer';
-import { allTools, getLogo } from '../../data/toolsData';
+import { allToolsComplete as allTools, getLogo } from '../../data/toolsData';
 import './Roadmaps.css';
 
 const ROADMAPS = [
@@ -143,7 +143,7 @@ export default function Roadmaps() {
           ))}
         </div>
       </div>
-      <Footer toolCount={0}/>
+      <Footer />
     </div>
   );
 }

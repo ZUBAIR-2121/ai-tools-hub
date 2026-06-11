@@ -41,7 +41,7 @@ export default function Saved() {
           </>
         )}
       </div>
-      <Footer toolCount={bookmarks.length}/>
+      <Footer />
       {selectedTool && <Modal tool={selectedTool} onClose={() => setSelectedTool(null)}/>}
     </div>
   );

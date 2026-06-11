@@ -26,3 +26,21 @@ th.compare-th-tool { display:table-cell;padding:16px 20px;text-align:center; }
 .compare-empty { text-align:center;padding:80px 20px;color:var(--dim); }
 .compare-empty h3 { font-family:var(--font-display);font-size:22px;font-weight:700;color:var(--muted);margin-bottom:10px; }
 @media(max-width:768px) { .compare-selectors { grid-template-columns:1fr; } }
+
+/* ── Compare Responsive ── */
+@media (max-width: 768px) {
+  .compare-container { padding: 28px 16px; }
+  .compare-title { font-size: 28px; }
+  .compare-selectors { grid-template-columns: 1fr; gap: 10px; }
+  .compare-table-wrap { font-size: 12px; }
+  .compare-th-label, .compare-td-label { padding: 10px 12px; font-size: 11px; }
+  .compare-td { padding: 10px 12px; font-size: 12px; }
+}
+
+@media (max-width: 480px) {
+  .compare-container { padding: 20px 12px; }
+  .compare-title { font-size: 24px; }
+  .compare-sub { font-size: 13px; }
+  .compare-slot { padding: 14px; }
+  .slot-name { font-size: 12px; }
+}

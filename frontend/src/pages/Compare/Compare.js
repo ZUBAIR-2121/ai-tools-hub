@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { allTools, getLogo } from '../../data/toolsData';
+import { allToolsComplete as allTools, getLogo } from '../../data/toolsData';
 import Footer from '../../components/Footer';
 import './Compare.css';
 
@@ -96,7 +96,7 @@ export default function Compare() {
           </div>
         )}
       </div>
-      <Footer toolCount={allTools.length}/>
+      <Footer />
     </div>
   );
 }

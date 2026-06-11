@@ -3,7 +3,7 @@ import { Link, useNavigate, useLocation } from 'react-router-dom';
 import { useAuth } from '../context/AuthContext';
 import { useTheme } from '../context/ThemeContext';
 import { useBookmarks } from '../context/BookmarkContext';
-import { allTools } from '../data/toolsData';
+import { allToolsComplete as allTools } from '../data/toolsData';
 import './Navbar.css';
 
 export default function Navbar() {

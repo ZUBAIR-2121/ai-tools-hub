@@ -1,5 +1,5 @@
 import React, { useState, useEffect, useRef } from 'react';
-import { DATA, allTools } from '../data/toolsData';
+import { ALL_DATA as DATA, allToolsComplete as allTools } from '../data/toolsData';
 import ToolCard from '../components/ToolCard';
 import SkeletonCard from '../components/SkeletonCard';
 import Modal from '../components/Modal';
@@ -16,7 +16,7 @@ const FILTERS = [
   { label: '🔓 Free+Paid', type: 'both' },
 ];
 const DIFF_FILTERS = ['All Levels', 'Beginner', 'Intermediate', 'Advanced'];
-const TOP10 = ['ChatGPT','Canva AI','CapCut','Claude AI','Midjourney','Suno AI','ElevenLabs','Gemini','Leonardo AI','Cursor'];
+const TOP10 = ['ChatGPT','Canva AI','CapCut','Claude AI','Midjourney','Suno AI','ElevenLabs','Krea AI','Leonardo AI','Cursor'];
 
 const DIFFICULTY_MAP = {
   ChatGPT:'Beginner','Claude AI':'Beginner',Gemini:'Beginner',Grok:'Beginner',
@@ -37,6 +37,20 @@ const DIFFICULTY_MAP = {
   'Beautiful.ai':'Beginner','Predis AI':'Beginner','Hootsuite OwlyWriter':'Intermediate',
   'Originality AI':'Beginner','Undetectable AI':'Beginner','GPTZero':'Beginner',
   'AdCreative.ai':'Intermediate',
+  // New tools
+  'Dora AI':'Intermediate','Webflow AI':'Advanced','Softr':'Beginner',
+  'Glide':'Beginner','Plasmic':'Advanced','Krea AI':'Beginner',
+  'Magnific AI':'Intermediate','Clipdrop':'Beginner','Photoroom':'Beginner',
+  'Pebblely':'Beginner','Rask AI':'Intermediate','Fliki':'Beginner',
+  'Wondershare Filmora AI':'Beginner','Kaiber':'Intermediate',
+  'Lalal.ai':'Beginner','Cleanvoice AI':'Beginner','Krisp':'Beginner',
+  'Soundraw':'Beginner','Voicemod':'Beginner',
+  'Pieces for Developers':'Intermediate','Phind':'Beginner',
+  'Blackbox AI':'Beginner','Zed Editor':'Intermediate',
+  'Rows':'Intermediate','Browse AI':'Beginner','Bardeen':'Beginner','Tango':'Beginner',
+  'Neuronwriter':'Intermediate','Taplio':'Beginner','Postwise':'Beginner',
+  'Reflect':'Intermediate','Taskade':'Beginner','Magical':'Beginner',
+  'Octane AI':'Intermediate','Describely':'Beginner',
 };
 
 export default function Home() {
@@ -110,7 +124,7 @@ export default function Home() {
 
       {/* HERO */}
       <section className="hero">
-        <div className="hero-badge"><span className="live-dot"/>✨ {allTools.length}+ AI Tools · Always Updated</div>
+        <div className="hero-badge"><span className="live-dot"/>✨ {allTools.length}+ AI Tools · 22+ Categories · Always Updated</div>
         <h1 className="hero-h1">
           <span className="line1">Learn, Master &</span>
           <span className="grad-text"> Explore Every AI Tool</span>
@@ -140,8 +154,7 @@ export default function Home() {
           <div className="stat"><span className="stat-num">100%</span><span className="stat-label">Free Access</span></div>
           <div className="stat-sep"/>
           <div className="stat"><span className="stat-num">Hindi</span><span className="stat-label">Tutorials</span></div>
-        </div>
-      </section>
+        </div>      </section>
 
       {/* MARQUEE */}
       <section className="marquee-section">
@@ -256,7 +269,7 @@ export default function Home() {
         )}
       </main>
 
-      <Footer toolCount={allTools.length}/>
+      <Footer />
 
       {showScroll && (
         <button className="scroll-top" onClick={() => window.scrollTo({top:0,behavior:'smooth'})}>↑</button>

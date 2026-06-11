@@ -61,3 +61,32 @@ body.light .navbar { background:#f4f4fbcc; }
 @media(max-width:600px) {
   .nav-search-wrap { display:none; }
 }
+
+/* ── Navbar Responsive ── */
+@media (max-width: 768px) {
+  .navbar { padding: 10px 16px; gap: 10px; }
+  .nav-logo { font-size: 15px; }
+  .logo-dot { width: 7px; height: 7px; }
+  .nav-links { display: none; }
+  .nav-search-wrap { flex: 1; max-width: none; }
+  .nav-search-input { padding: 8px 30px 8px 30px; font-size: 13px; }
+  .nav-actions { gap: 6px; }
+  .theme-toggle { padding: 6px 8px; font-size: 14px; }
+  .nav-link-btn { display: none; }
+  .nav-cta { padding: 7px 14px; font-size: 12px; }
+  .nav-username { display: none; }
+}
+
+@media (max-width: 480px) {
+  .navbar { padding: 8px 12px; }
+  .nav-logo { font-size: 14px; }
+  .nav-search-wrap { display: none; }
+  .nav-cta { padding: 7px 12px; font-size: 11px; }
+}
+
+/* Suggestions on mobile */
+@media (max-width: 600px) {
+  .nav-suggestions { left: -60px; right: -16px; border-radius: 12px; }
+  .nav-sug-item { padding: 10px 12px; }
+  .sug-name { font-size: 12px; }
+}
