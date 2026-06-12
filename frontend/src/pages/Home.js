@@ -1,4 +1,5 @@
 import React, { useState, useEffect, useRef } from 'react';
+import { Link } from 'react-router-dom';
 import { ALL_DATA as DATA, allToolsComplete as allTools } from '../data/toolsData';
 import ToolCard from '../components/ToolCard';
 import SkeletonCard from '../components/SkeletonCard';
@@ -216,7 +217,7 @@ export default function Home() {
       {compareList.length > 0 && (
         <div className="compare-bar">
           <span className="compare-bar-label">🆚 Comparing: {compareList.join(' vs ')}</span>
-          <a href="/compare" className="compare-go-btn">Compare Now →</a>
+          <Link to="/compare" className="compare-go-btn">Compare Now →</Link>
           <button className="compare-clear-btn" onClick={() => setCompareList([])}>Clear</button>
         </div>
       )}
