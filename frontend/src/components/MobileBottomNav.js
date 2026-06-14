@@ -6,27 +6,25 @@ export default function MobileBottomNav() {
   const location = useLocation();
   const { bookmarks } = useBookmarks();
   const p = location.pathname;
-  if (['/login','/register'].includes(p)) return null;
+  if (['/login', '/register'].includes(p)) return null;
+
+  const items = [
+    { to: '/', icon: '🏠', label: 'Explore' },
+    { to: '/roadmaps', icon: '🗺️', label: 'Roadmaps' },
+    { to: '/compare', icon: '🆚', label: 'Compare' },
+    { to: '/saved', icon: '🔖', label: `Saved${bookmarks.length > 0 ? ` (${bookmarks.length})` : ''}` },
+    { to: '/news', icon: '📰', label: 'News' },
+  ];
 
   return (
     <div className="mobile-bottom-nav">
       <div className="mbn-inner">
-        <Link to="/" className={`mbn-btn${p==='/'?' active':''}`}>
-          <span>🏠</span><span>Explore</span>
-        </Link>
-        <Link to="/roadmaps" className={`mbn-btn${p==='/roadmaps'?' active':''}`}>
-          <span>🗺️</span><span>Roadmaps</span>
-        </Link>
-        <Link to="/compare" className={`mbn-btn${p==='/compare'?' active':''}`}>
-          <span>🆚</span><span>Compare</span>
-        </Link>
-        <Link to="/saved" className={`mbn-btn${p==='/saved'?' active':''}`}>
-          <span>🔖</span>
-          <span>Saved{bookmarks.length>0?` (${bookmarks.length})`:''}</span>
-        </Link>
-        <Link to="/news" className={`mbn-btn${p==='/news'?' active':''}`}>
-          <span>📰</span><span>News</span>
-        </Link>
+        {items.map(item => (
+          <Link key={item.to} to={item.to} className={`mbn-btn${p === item.to ? ' active' : ''}`}>
+            <span>{item.icon}</span>
+            <span>{item.label}</span>
+          </Link>
+        ))}
       </div>
     </div>
   );

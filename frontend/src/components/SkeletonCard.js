@@ -1,5 +1,4 @@
 import React from 'react';
-import './ToolCard.css';
 
 export default function SkeletonCard() {
   return (
