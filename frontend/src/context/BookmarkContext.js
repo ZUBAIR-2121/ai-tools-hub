@@ -14,9 +14,7 @@ export const BookmarkProvider = ({ children }) => {
 
   const toggle = (tool) => {
     setBookmarks(prev =>
-      prev.find(b => b.n === tool.n)
-        ? prev.filter(b => b.n !== tool.n)
-        : [...prev, tool]
+      prev.find(b => b.n === tool.n) ? prev.filter(b => b.n !== tool.n) : [...prev, tool]
     );
   };
 

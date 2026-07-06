@@ -4,7 +4,6 @@ import { useBookmarks } from '../../context/BookmarkContext';
 import ToolCard from '../../components/ToolCard';
 import Modal from '../../components/Modal';
 import Footer from '../../components/Footer';
-import './Saved.css';
 
 export default function Saved() {
   const { bookmarks, toggle } = useBookmarks();

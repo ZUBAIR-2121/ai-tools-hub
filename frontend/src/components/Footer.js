@@ -1,6 +1,5 @@
 import React from 'react';
 import { allToolsComplete } from '../data/toolsData';
-import './Footer.css';
 
 export default function Footer() {
   const total = allToolsComplete.length;
@@ -10,7 +9,7 @@ export default function Footer() {
         <div className="footer-grid">
           <div className="footer-brand">
             <div className="footer-logo">
-              <div className="logo-dot"></div>
+              <div className="logo-dot" />
               AI<span className="grad">Tools</span>Hub
             </div>
             <p>Your one-stop directory to learn, explore, and master every AI tool. Free forever. Built for creators, developers, and students.</p>
@@ -26,7 +25,6 @@ export default function Footer() {
               <span>📊 Data</span><span>⚡ Productivity</span>
               <span>🛒 E-Commerce</span><span>🧠 Avatars</span>
               <span>🛡️ AI Detection</span><span>📱 Social Media</span>
-              <span>🎮 3D & Animation</span><span>📧 Automation</span>
             </div>
           </div>
         </div>
@@ -34,9 +32,9 @@ export default function Footer() {
           <span>© 2025 AI Tools Hub · Built for learners, by learners · Always free</span>
           <div className="footer-meta">
             <span>{total}+ AI Tools Indexed</span>
-            <span className="sep-dot"></span>
+            <span className="sep-dot" />
             <span>22+ Categories</span>
-            <span className="sep-dot"></span>
+            <span className="sep-dot" />
             <span style={{ color: 'var(--accent3)' }}>🟢 Always Updated</span>
           </div>
         </div>

@@ -9,11 +9,11 @@ export default function MobileBottomNav() {
   if (['/login', '/register'].includes(p)) return null;
 
   const items = [
-    { to: '/', icon: '🏠', label: 'Explore' },
+    { to: '/',         icon: '🏠', label: 'Explore' },
     { to: '/roadmaps', icon: '🗺️', label: 'Roadmaps' },
-    { to: '/compare', icon: '🆚', label: 'Compare' },
-    { to: '/saved', icon: '🔖', label: `Saved${bookmarks.length > 0 ? ` (${bookmarks.length})` : ''}` },
-    { to: '/news', icon: '📰', label: 'News' },
+    { to: '/compare',  icon: '🆚', label: 'Compare' },
+    { to: '/saved',    icon: '🔖', label: bookmarks.length > 0 ? `Saved (${bookmarks.length})` : 'Saved' },
+    { to: '/news',     icon: '📰', label: 'News' },
   ];
 
   return (

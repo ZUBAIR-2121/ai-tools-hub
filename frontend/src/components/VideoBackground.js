@@ -1,10 +1,9 @@
 import React, { useRef, useEffect } from 'react';
 
 /**
- * Cinematic looping video background with custom fade system.
- * - 500ms fade-in on load/loop start
- * - 500ms fade-out 0.55s before video ends
- * - requestAnimationFrame based (no CSS transitions)
+ * Cinematic looping video background.
+ * Custom rAF-based fade system — no CSS transitions.
+ * 500ms fade-in on load/loop, 500ms fade-out 0.55s before end.
  */
 export default function VideoBackground({ src }) {
   const videoRef = useRef(null);
@@ -21,81 +20,60 @@ export default function VideoBackground({ src }) {
       if (video) video.style.opacity = val;
     };
 
-    const animateFade = (target, duration) => {
-      if (rafRef.current) cancelAnimationFrame(rafRef.current);
-      const start = performance.now();
-      const startOpacity = opacityRef.current;
+    const cancelRaf = () => {
+      if (rafRef.current) { cancelAnimationFrame(rafRef.current); rafRef.current = null; }
+    };
 
+    const animateTo = (target, duration) => {
+      cancelRaf();
+      const start = performance.now();
+      const from = opacityRef.current;
       const step = (now) => {
-        const elapsed = now - start;
-        const t = Math.min(elapsed / duration, 1);
-        const eased = t * (2 - t); // ease-out
-        const value = startOpacity + (target - startOpacity) * eased;
-        setOpacity(value);
-        if (t < 1) {
-          rafRef.current = requestAnimationFrame(step);
-        }
+        const t = Math.min((now - start) / duration, 1);
+        const eased = t < .5 ? 2 * t * t : -1 + (4 - 2 * t) * t;
+        setOpacity(from + (target - from) * eased);
+        if (t < 1) rafRef.current = requestAnimationFrame(step);
       };
       rafRef.current = requestAnimationFrame(step);
     };
 
-    const fadeIn = () => {
-      fadingOutRef.current = false;
-      animateFade(1, 500);
-    };
+    const onPlay = () => { fadingOutRef.current = false; animateTo(1, 500); };
 
-    const fadeOut = () => {
-      if (fadingOutRef.current) return;
-      fadingOutRef.current = true;
-      animateFade(0, 500);
-    };
-
-    const handlePlay = () => fadeIn();
-
-    const handleTimeUpdate = () => {
-      if (!video.duration) return;
-      const remaining = video.duration - video.currentTime;
-      if (remaining <= 0.55 && !fadingOutRef.current) {
-        fadeOut();
+    const onTimeUpdate = () => {
+      if (!video.duration || fadingOutRef.current) return;
+      if (video.duration - video.currentTime <= 0.55) {
+        fadingOutRef.current = true;
+        animateTo(0, 500);
       }
     };
 
-    const handleEnded = () => {
-      setOpacity(0);
-      fadingOutRef.current = false;
-      setTimeout(() => {
-        video.currentTime = 0;
-        video.play().catch(() => {});
-      }, 100);
+    const onEnded = () => {
+      setOpacity(0); fadingOutRef.current = false;
+      setTimeout(() => { video.currentTime = 0; video.play().catch(() => {}); }, 100);
     };
 
-    video.addEventListener('play', handlePlay);
-    video.addEventListener('timeupdate', handleTimeUpdate);
-    video.addEventListener('ended', handleEnded);
-
+    video.addEventListener('play', onPlay);
+    video.addEventListener('timeupdate', onTimeUpdate);
+    video.addEventListener('ended', onEnded);
     video.play().catch(() => {});
 
     return () => {
-      video.removeEventListener('play', handlePlay);
-      video.removeEventListener('timeupdate', handleTimeUpdate);
-      video.removeEventListener('ended', handleEnded);
-      if (rafRef.current) cancelAnimationFrame(rafRef.current);
+      cancelRaf();
+      video.removeEventListener('play', onPlay);
+      video.removeEventListener('timeupdate', onTimeUpdate);
+      video.removeEventListener('ended', onEnded);
     };
   }, [src]);
 
   return (
-    <div className="video-bg-container">
+    <div className="video-bg-wrap">
       <video
         ref={videoRef}
-        className="video-bg"
+        className="video-bg-el"
         src={src}
-        autoPlay
-        muted
-        loop={false}
-        playsInline
-        preload="auto"
+        autoPlay muted loop={false} playsInline preload="auto"
       />
-      <div className="video-overlay" />
+      <div className="video-bg-scrim" />
     </div>
   );
 }

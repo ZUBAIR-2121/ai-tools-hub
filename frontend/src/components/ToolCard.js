@@ -5,28 +5,10 @@ import useVoice from '../hooks/useVoice';
 import './ToolCard.css';
 
 const DIFFICULTY = {
-  ChatGPT:'Beginner', 'Claude AI':'Beginner', Gemini:'Beginner', Grok:'Beginner',
-  DeepSeek:'Beginner', 'Meta AI':'Beginner', Poe:'Beginner', CapCut:'Beginner',
-  Canva:'Beginner', Grammarly:'Beginner', Quillbot:'Beginner', Suno:'Beginner',
-  'Adobe Podcast':'Beginner', 'Perplexity AI':'Beginner', 'NotebookLM':'Beginner',
-  'ElevenLabs':'Intermediate', 'Leonardo AI':'Intermediate', Gamma:'Intermediate',
-  'Julius AI':'Intermediate', 'Tableau Public':'Beginner', 'Power BI':'Intermediate',
-  'Invideo AI':'Beginner', 'Opus Clip':'Beginner', 'Kling AI':'Intermediate',
-  Descript:'Intermediate', 'Jasper AI':'Intermediate', 'Copy.ai':'Beginner',
-  'Bolt.new':'Intermediate', Framer:'Intermediate', Lovable:'Intermediate',
-  'V0 by Vercel':'Intermediate', 'GitHub Copilot':'Advanced', Cursor:'Advanced',
-  'Replit AI':'Intermediate', Windsurf:'Advanced', Midjourney:'Intermediate',
-  'Adobe Firefly':'Intermediate', Ideogram:'Beginner', 'Canva AI':'Beginner',
-  Sora:'Intermediate', 'Surfer SEO':'Intermediate', Semrush:'Intermediate',
-  HeyGen:'Beginner', Synthesia:'Beginner', 'D-ID':'Beginner',
-  'Murf AI':'Beginner', 'Notion AI':'Beginner', Figma:'Advanced',
-  Looka:'Beginner', Uizard:'Beginner', Tome:'Beginner', 'Beautiful.ai':'Beginner',
-  'Predis AI':'Beginner', 'Opus Clip':'Beginner', 'Hootsuite OwlyWriter':'Intermediate',
-  'Originality AI':'Beginner', 'Undetectable AI':'Beginner', 'GPTZero':'Beginner',
-  'AdCreative.ai':'Intermediate',
+  ChatGPT:'Beginner','Claude AI':'Beginner',Gemini:'Beginner',Grok:'Beginner',DeepSeek:'Beginner','Meta AI':'Beginner',Poe:'Beginner',CapCut:'Beginner',Canva:'Beginner',Grammarly:'Beginner',Quillbot:'Beginner',Suno:'Beginner','Adobe Podcast':'Beginner','Perplexity AI':'Beginner','NotebookLM':'Beginner',ElevenLabs:'Intermediate','Leonardo AI':'Intermediate',Gamma:'Intermediate','Julius AI':'Intermediate','Tableau Public':'Beginner','Power BI':'Intermediate','Invideo AI':'Beginner','Opus Clip':'Beginner','Kling AI':'Intermediate',Descript:'Intermediate','Jasper AI':'Intermediate','Copy.ai':'Beginner','Bolt.new':'Intermediate',Framer:'Intermediate',Lovable:'Intermediate','V0 by Vercel':'Intermediate','GitHub Copilot':'Advanced',Cursor:'Advanced','Replit AI':'Intermediate',Windsurf:'Advanced',Midjourney:'Intermediate','Adobe Firefly':'Intermediate',Ideogram:'Beginner','Canva AI':'Beginner',Sora:'Intermediate','Surfer SEO':'Intermediate',Semrush:'Intermediate',HeyGen:'Beginner',Synthesia:'Beginner','D-ID':'Beginner','Murf AI':'Beginner','Notion AI':'Beginner','Figma AI':'Advanced',Looka:'Beginner',Uizard:'Beginner',Tome:'Beginner','Beautiful.ai':'Beginner','Predis AI':'Beginner','Hootsuite OwlyWriter':'Intermediate','Originality AI':'Beginner','Undetectable AI':'Beginner','GPTZero':'Beginner','AdCreative.ai':'Intermediate',
 };
 
-export default function ToolCard({ tool, onOpenModal, onCompare, compareList=[] }) {
+export default function ToolCard({ tool, onOpenModal, onCompare, compareList = [] }) {
   const [expanded, setExpanded] = useState(false);
   const [imgError, setImgError] = useState(false);
   const { toggle, isBookmarked } = useBookmarks();
@@ -38,25 +20,20 @@ export default function ToolCard({ tool, onOpenModal, onCompare, compareList=[] 
   const handleShare = (e) => {
     e.stopPropagation();
     const text = `Check out ${tool.n} — ${tool.d}\n${tool.url}`;
-    if (navigator.share) {
-      navigator.share({ title: tool.n, text: tool.d, url: tool.url });
-    } else {
-      navigator.clipboard.writeText(text);
-      alert('Link copied to clipboard!');
-    }
+    if (navigator.share) navigator.share({ title: tool.n, text: tool.d, url: tool.url });
+    else { navigator.clipboard.writeText(text); alert('Link copied!'); }
   };
 
   return (
-    <div className={`card${expanded?' expanded':''}${inCompare?' in-compare':''}`}>
+    <div className={`card${expanded ? ' expanded' : ''}${inCompare ? ' in-compare' : ''}`}>
       <div className="card-glow" />
 
-      {/* Bookmark + Compare buttons */}
       <div className="card-actions-top">
-        <button className={`bm-btn${bookmarked?' bookmarked':''}`} onClick={() => toggle(tool)} title={bookmarked?'Remove bookmark':'Save tool'}>
+        <button className={`bm-btn${bookmarked ? ' bookmarked' : ''}`} onClick={() => toggle(tool)} title={bookmarked ? 'Remove bookmark' : 'Save tool'}>
           {bookmarked ? '🔖' : '📌'}
         </button>
         {onCompare && (
-          <button className={`cmp-btn${inCompare?' active':''}`} onClick={() => onCompare(tool.n)} title="Add to compare">
+          <button className={`cmp-btn${inCompare ? ' active' : ''}`} onClick={() => onCompare(tool.n)} title="Add to compare">
             {inCompare ? '✓' : '🆚'}
           </button>
         )}
@@ -71,7 +48,7 @@ export default function ToolCard({ tool, onOpenModal, onCompare, compareList=[] 
           )}
           <span className="card-name">{tool.n}</span>
           <span className={`badge badge-${tool.t}`}>
-            {tool.t==='free'?'✅ Free':tool.t==='paid'?'💎 Paid':'🔓 Free+'}
+            {tool.t === 'free' ? '✅ Free' : tool.t === 'paid' ? '💎 Paid' : '🔓 Free+'}
           </span>
         </div>
         <div className="card-badges-row">
@@ -85,9 +62,9 @@ export default function ToolCard({ tool, onOpenModal, onCompare, compareList=[] 
         {expanded && tool.about && <p className="card-detail">{tool.about}</p>}
         {expanded && tool.steps && (
           <div className="card-steps">
-            {tool.steps.slice(0,3).map((s,i) => (
+            {tool.steps.slice(0, 3).map((s, i) => (
               <div className="step" key={i}>
-                <div className="step-num">{i+1}</div>
+                <div className="step-num">{i + 1}</div>
                 <span className="step-text">{s}</span>
               </div>
             ))}
@@ -95,8 +72,8 @@ export default function ToolCard({ tool, onOpenModal, onCompare, compareList=[] 
         )}
         {expanded && tool.tips && (
           <div className="card-tags">
-            {tool.tips.slice(0,2).map((tip,i) => (
-              <span className="tag" key={i}>💡 {tip.slice(0,44)}…</span>
+            {tool.tips.slice(0, 2).map((tip, i) => (
+              <span className="tag" key={i}>💡 {tip.slice(0, 44)}…</span>
             ))}
           </div>
         )}
@@ -104,17 +81,17 @@ export default function ToolCard({ tool, onOpenModal, onCompare, compareList=[] 
 
       <div className="card-footer">
         <a className="card-link" href={tool.url} target="_blank" rel="noopener noreferrer">Visit →</a>
-        <button className="expand-btn" onClick={() => setExpanded(e=>!e)}>
-          {expanded?'Collapse':'Quick View'}
+        <button className="expand-btn" onClick={() => setExpanded(e => !e)}>
+          {expanded ? 'Collapse' : 'Quick View'}
         </button>
         <button className="detail-btn" onClick={() => onOpenModal(tool)}>Full Details</button>
         {supported && (
           <button
-            className={`voice-btn${speaking?' voice-active':''}${loading?' voice-loading':''}`}
-            onClick={() => (speaking||loading)?stop():speakQuick(tool)}
+            className={`voice-btn${speaking ? ' voice-active' : ''}${loading ? ' voice-loading' : ''}`}
+            onClick={() => (speaking || loading) ? stop() : speakQuick(tool)}
             title="Listen"
           >
-            {loading?<span className="voice-spinner"/>:speaking?'⏹':'🔊'}
+            {loading ? <span className="voice-spinner" /> : speaking ? '⏹' : '🔊'}
           </button>
         )}
         <button className="share-btn" onClick={handleShare} title="Share">📤</button>

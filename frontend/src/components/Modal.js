@@ -1,11 +1,10 @@
-import React, { useEffect, useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { getLogo } from '../data/toolsData';
 import useVoice from '../hooks/useVoice';
-import './Modal.css';
 
 export default function Modal({ tool, onClose }) {
   const [imgError, setImgError] = useState(false);
-  const { speaking, loading, supported, hasApiKey, speakTool, stop } = useVoice();
+  const { speaking, loading, supported, speakTool, stop } = useVoice();
 
   useEffect(() => {
     const handler = (e) => { if (e.key === 'Escape') { stop(); onClose(); } };
@@ -19,8 +18,6 @@ export default function Modal({ tool, onClose }) {
   }, [onClose, stop]);
 
   if (!tool) return null;
-
-  const voiceLabel = loading ? 'Loading…' : speaking ? '⏹ Stop' : '🔊 Listen';
 
   return (
     <div className="modal-overlay" onClick={(e) => { if (e.target === e.currentTarget) { stop(); onClose(); } }}>
@@ -44,21 +41,18 @@ export default function Modal({ tool, onClose }) {
               <button
                 className={`modal-voice-btn${speaking ? ' active' : ''}${loading ? ' loading' : ''}`}
                 onClick={() => (speaking || loading) ? stop() : speakTool(tool)}
-                title={hasApiKey ? 'Indian female voice (ElevenLabs)' : 'Browser voice (add ElevenLabs key for Indian female voice)'}
               >
                 {loading
                   ? <><span className="voice-spinner-sm" /> Loading…</>
                   : speaking
                   ? <><span className="voice-bars"><span/><span/><span/><span/></span> Stop</>
-                  : <><span>🔊</span> {hasApiKey ? 'Listen' : 'Listen'}</>
+                  : <><span>🔊</span> Listen</>
                 }
               </button>
             )}
             <button className="modal-close" onClick={() => { stop(); onClose(); }}>✕</button>
           </div>
         </div>
-
-
 
         <div className="modal-body">
           {tool.about && (
@@ -94,8 +88,8 @@ export default function Modal({ tool, onClose }) {
                   <a className="yt-card" href={v.url} target="_blank" rel="noopener noreferrer" key={i}>
                     <div className="yt-icon">▶</div>
                     <div className="yt-info">
-                      <div style={{ fontSize: 13, fontWeight: 600, color: 'var(--text)', marginBottom: 2 }}>{v.title}</div>
-                      <div style={{ fontSize: 12, color: 'var(--dim)' }}>{v.ch}</div>
+                      <div style={{ fontSize: 13, fontWeight: 600, color: 'var(--ink)', marginBottom: 2 }}>{v.title}</div>
+                      <div style={{ fontSize: 12, color: 'var(--ink3)' }}>{v.ch}</div>
                     </div>
                   </a>
                 ))}

@@ -8,37 +8,27 @@ export const AuthProvider = ({ children }) => {
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-    if (token) {
-      fetchMe();
-    } else {
-      setLoading(false);
-    }
+    if (token) fetchMe();
+    else setLoading(false);
   }, []);
 
   const fetchMe = async () => {
     try {
-      const res = await fetch('/api/auth/me', {
-        headers: { Authorization: `Bearer ${token}` },
-      });
+      const res = await fetch('/api/auth/me', { headers: { Authorization: `Bearer ${token}` } });
       const data = await res.json();
       if (data.success) setUser(data.user);
       else logout();
-    } catch {
-      logout();
-    } finally {
-      setLoading(false);
-    }
+    } catch { logout(); }
+    finally { setLoading(false); }
   };
 
   const login = (userData, tokenVal) => {
-    setUser(userData);
-    setToken(tokenVal);
+    setUser(userData); setToken(tokenVal);
     localStorage.setItem('token', tokenVal);
   };
 
   const logout = () => {
-    setUser(null);
-    setToken(null);
+    setUser(null); setToken(null);
     localStorage.removeItem('token');
   };
 

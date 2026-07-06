@@ -1,6 +1,5 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
-import './AuthPages.css';
 
 export default function Login() {
   return (
@@ -18,10 +17,10 @@ export default function Login() {
             User accounts are being set up. Everything on the website works perfectly without logging in — just explore freely!
           </p>
           <div className="acs-features">
-            <div className="acs-feature">✅ Browse 58+ AI Tools — Free</div>
+            <div className="acs-feature">✅ Browse 150+ AI Tools — Free</div>
             <div className="acs-feature">🔖 Save Tools — Works without login</div>
             <div className="acs-feature">🤖 AI Assistant — Available now</div>
-            <div className="acs-feature">🗺️ Roadmaps & News — Available now</div>
+            <div className="acs-feature">🗺️ Roadmaps &amp; News — Available now</div>
           </div>
           <Link to="/" className="acs-btn">Explore AI Tools →</Link>
         </div>

@@ -1,5 +1,4 @@
 import React, { useState, useRef, useEffect } from 'react';
-import './AIChatbot.css';
 
 const SUGGESTIONS = [
   '🎬 Best free video editing AI?',
@@ -35,30 +34,15 @@ function formatMessage(text) {
   const lines = text.split('\n');
   return lines.map((line, i) => {
     if (!line.trim()) return <div key={i} style={{ height: 6 }} />;
-
-    // Bold text **word**
     const parts = line.split(/(\*\*[^*]+\*\*)/g).map((part, j) => {
-      if (part.startsWith('**') && part.endsWith('**')) {
-        return <strong key={j}>{part.slice(2, -2)}</strong>;
-      }
+      if (part.startsWith('**') && part.endsWith('**')) return <strong key={j}>{part.slice(2, -2)}</strong>;
       return part;
     });
-
     if (line.startsWith('• ') || line.startsWith('- ') || line.startsWith('* ')) {
-      return (
-        <div key={i} className="ai-bullet">
-          <span className="ai-bullet-dot">•</span>
-          <span>{parts}</span>
-        </div>
-      );
+      return <div key={i} className="ai-bullet"><span className="ai-bullet-dot">•</span><span>{parts}</span></div>;
     }
     if (line.match(/^\d+\.\s/)) {
-      return (
-        <div key={i} className="ai-bullet">
-          <span className="ai-bullet-dot">{line.match(/^\d+/)[0]}.</span>
-          <span>{line.replace(/^\d+\.\s/, '')}</span>
-        </div>
-      );
+      return <div key={i} className="ai-bullet"><span className="ai-bullet-dot">{line.match(/^\d+/)[0]}.</span><span>{line.replace(/^\d+\.\s/, '')}</span></div>;
     }
     if (line.startsWith('###') || line.startsWith('##') || line.startsWith('#')) {
       return <div key={i} className="ai-heading">{line.replace(/^#+\s/, '')}</div>;
@@ -93,42 +77,26 @@ export default function AIChatbot() {
   const send = async (text) => {
     const q = (text || input).trim();
     if (!q || typing) return;
-    setInput('');
-    setError('');
+    setInput(''); setError('');
     setMessages(m => [...m, { role: 'user', text: q }]);
     setTyping(true);
     historyRef.current.push({ role: 'user', content: q });
-
     try {
       const res = await fetch('https://api.anthropic.com/v1/messages', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({
-          model: 'claude-sonnet-4-6',
-          max_tokens: 1024,
-          system: SYSTEM_PROMPT,
-          messages: historyRef.current.slice(-12),
-        }),
+        body: JSON.stringify({ model: 'claude-sonnet-4-6', max_tokens: 1024, system: SYSTEM_PROMPT, messages: historyRef.current.slice(-12) }),
       });
-
-      if (!res.ok) {
-        const errData = await res.json().catch(() => ({}));
-        throw new Error(errData?.error?.message || `API error ${res.status}`);
-      }
-
+      if (!res.ok) { const d = await res.json().catch(() => ({})); throw new Error(d?.error?.message || `API error ${res.status}`); }
       const data = await res.json();
       const reply = data.content?.[0]?.text || "Sorry, I couldn't get a response. Please try again.";
       historyRef.current.push({ role: 'assistant', content: reply });
       setMessages(m => [...m, { role: 'assistant', text: reply }]);
       if (!open) setUnread(u => u + 1);
-
     } catch (err) {
-      console.error('Chat error:', err);
       setError('⚠️ Could not connect. Check your internet and try again.');
-      historyRef.current.pop(); // remove failed user message from history
-    } finally {
-      setTyping(false);
-    }
+      historyRef.current.pop();
+    } finally { setTyping(false); }
   };
 
   const clearChat = () => {
@@ -139,26 +107,12 @@ export default function AIChatbot() {
 
   return (
     <>
-      {/* FAB */}
-      <button
-        className={`chatbot-fab${open ? ' open' : ''}`}
-        onClick={() => setOpen(o => !o)}
-        aria-label="AI Assistant"
-      >
-        {open ? '✕' : (
-          <>
-            <span className="fab-icon">🤖</span>
-            <span className="chatbot-fab-label">AI Assistant</span>
-            {unread > 0 && <span className="fab-unread">{unread}</span>}
-          </>
-        )}
+      <button className={`chatbot-fab${open ? ' open' : ''}`} onClick={() => setOpen(o => !o)} aria-label="AI Assistant">
+        {open ? '✕' : (<><span className="fab-icon">🤖</span><span className="chatbot-fab-label">AI Assistant</span>{unread > 0 && <span className="fab-unread">{unread}</span>}</>)}
       </button>
 
-      {/* Window */}
       {open && (
         <div className={`chatbot-window${minimized ? ' minimized' : ''}`}>
-
-          {/* Head */}
           <div className="chatbot-head">
             <div className="chatbot-head-info">
               <div className="chatbot-avatar-wrap">
@@ -167,24 +121,18 @@ export default function AIChatbot() {
               </div>
               <div>
                 <div className="chatbot-title">AI Assistant</div>
-                <div className="chatbot-status">
-                  <span className="status-dot" />
-                  {typing ? 'Thinking…' : 'Ask me anything'}
-                </div>
+                <div className="chatbot-status"><span className="status-dot" />{typing ? 'Thinking…' : 'Ask me anything'}</div>
               </div>
             </div>
             <div className="chatbot-head-btns">
               <button className="chatbot-head-btn" onClick={clearChat} title="Clear">🗑️</button>
-              <button className="chatbot-head-btn" onClick={() => setMinimized(m => !m)} title="Minimize">
-                {minimized ? '⬆' : '⬇'}
-              </button>
+              <button className="chatbot-head-btn" onClick={() => setMinimized(m => !m)} title="Minimize">{minimized ? '⬆' : '⬇'}</button>
               <button className="chatbot-close" onClick={() => setOpen(false)}>✕</button>
             </div>
           </div>
 
           {!minimized && (
             <>
-              {/* Messages */}
               <div className="chatbot-messages">
                 {messages.map((msg, i) => (
                   <div key={i} className={`chat-msg ${msg.role}`}>
@@ -198,9 +146,7 @@ export default function AIChatbot() {
                   <div className="chat-msg assistant">
                     <div className="chat-msg-avatar">🤖</div>
                     <div className="chat-msg-content">
-                      <div className="chat-bubble">
-                        <div className="typing-indicator"><span /><span /><span /></div>
-                      </div>
+                      <div className="chat-bubble"><div className="typing-indicator"><span /><span /><span /></div></div>
                     </div>
                   </div>
                 )}
@@ -208,7 +154,6 @@ export default function AIChatbot() {
                 <div ref={bottomRef} />
               </div>
 
-              {/* Suggestions */}
               {messages.length <= 1 && (
                 <div className="chatbot-suggestions">
                   <div className="sug-label">💡 Try asking:</div>
@@ -220,7 +165,6 @@ export default function AIChatbot() {
                 </div>
               )}
 
-              {/* Input */}
               <div className="chatbot-input-row">
                 <input
                   ref={inputRef}
@@ -232,11 +176,7 @@ export default function AIChatbot() {
                   onKeyDown={e => e.key === 'Enter' && !e.shiftKey && send()}
                   disabled={typing}
                 />
-                <button
-                  className={`chatbot-send${typing ? ' disabled' : ''}`}
-                  onClick={() => send()}
-                  disabled={typing}
-                >
+                <button className={`chatbot-send${typing ? ' disabled' : ''}`} onClick={() => send()} disabled={typing}>
                   {typing ? <span className="send-spinner" /> : '➤'}
                 </button>
               </div>

@@ -20,7 +20,7 @@ export default function PWAInstallBanner() {
 
   return (
     <div className="pwa-banner">
-      <span style={{fontSize:28}}>📲</span>
+      <span style={{ fontSize: 28 }}>📲</span>
       <div className="pwa-banner-text">
         <strong>Install AI Tools Hub</strong>
         Add to home screen for quick access — works offline!
